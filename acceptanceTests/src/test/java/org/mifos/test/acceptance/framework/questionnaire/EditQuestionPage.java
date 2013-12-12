@@ -95,8 +95,7 @@ public class EditQuestionPage extends CreateQuestionRootPage {
 
     public void addSmartAnswerChoices(List<String> answerChoices) {
         for(String answerChoice : answerChoices) {
-            selenium.type("currentQuestion.currentSmartChoice", answerChoice);
-            selenium.keyUp("id=currentQuestion.currentSmartChoice", " ");
+            typeAndFireEvents("currentQuestion.currentSmartChoice", answerChoice);
             selenium.click("_eventId_addSmartChoice");
             waitForPageToLoad();
         }
@@ -104,8 +103,7 @@ public class EditQuestionPage extends CreateQuestionRootPage {
 
     public void addAnswerChoices(List<String> answerChoices) {
         for(String answerChoice : answerChoices) {
-            selenium.type("currentQuestion.currentChoice", answerChoice);
-            selenium.keyUp("id=currentQuestion.currentChoice"," ");
+            typeAndFireEvents("currentQuestion.currentChoice", answerChoice);
             selenium.click("_eventId_addChoice");
             waitForPageToLoad();
         }

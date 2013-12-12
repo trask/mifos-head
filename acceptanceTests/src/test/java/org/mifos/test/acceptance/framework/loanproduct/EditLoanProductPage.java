@@ -66,8 +66,7 @@ public class EditLoanProductPage extends MifosPage {
         }
         else if(parameters.getCalculateLoanAmount() == SubmitFormParameters.BY_LAST_LOAN_AMOUNT) {
             for(int i = 1; i <= SubmitFormParameters.MAX_CYCLES; i++) {
-                selenium.typeKeys("endRangeLoanAmt"+i, parameters.getLastAmountByLastLoanAmount(i-1).replaceAll(",", ""));
-                selenium.fireEvent("endRangeLoanAmt"+i, "blur");
+                typeAndFireEvents("endRangeLoanAmt"+i, parameters.getLastAmountByLastLoanAmount(i-1).replaceAll(",", ""));
                 typeTextIfNotEmpty("lastLoanMinLoanAmt"+i, parameters.getMinAmountByLastLoanAmount(i-1).replaceAll(",", ""));
                 typeTextIfNotEmpty("lastLoanMaxLoanAmt"+i, parameters.getMaxAmountByLastLoanAmount(i-1).replaceAll(",", ""));
                 typeTextIfNotEmpty("lastLoanDefaultLoanAmt"+i, parameters.getDefAmountByLastLoanAmount(i-1).replaceAll(",", ""));
@@ -99,8 +98,7 @@ public class EditLoanProductPage extends MifosPage {
         }
         else if(parameters.getCalculateInstallments() == SubmitFormParameters.BY_LAST_LOAN_AMOUNT) {
             for(int i = 1; i <= SubmitFormParameters.MAX_CYCLES; i++) {
-                selenium.typeKeys("endInstallmentRange"+i, parameters.getLastInstallmentByLastLoanAmount(i-1).replaceAll(",", ""));
-                selenium.fireEvent("endInstallmentRange"+i, "blur");
+                typeAndFireEvents("endInstallmentRange"+i, parameters.getLastInstallmentByLastLoanAmount(i-1).replaceAll(",", ""));
                 typeTextIfNotEmpty("minLoanInstallment"+i, parameters.getMinInstallmentByLastLoanAmount(i-1).replaceAll(",", ""));
                 typeTextIfNotEmpty("maxLoanInstallment"+i, parameters.getMaxInstallmentByLastLoanAmount(i-1).replaceAll(",", ""));
                 typeTextIfNotEmpty("defLoanInstallment"+i, parameters.getDefInstallmentByLastLoanAmount(i-1).replaceAll(",", ""));

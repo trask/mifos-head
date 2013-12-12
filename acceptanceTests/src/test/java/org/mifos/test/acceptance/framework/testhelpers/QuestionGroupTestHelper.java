@@ -102,8 +102,9 @@ public class QuestionGroupTestHelper {
     public void validateQuestionGroupTitle(List<String> titles) {
         navigationHelper.navigateToAdminPage().navigateToCreateQuestionGroupPage();
         for(String title : titles) {
-            selenium.type("title", title);
-            Assert.assertEquals(selenium.getValue("title"), title);
+            // css selector is necessary because the html title element also has id='title'
+            selenium.type("css=input[id='title']", title);
+            Assert.assertEquals(selenium.getValue("css=input[id='title']"), title);
         }
     }
 

@@ -63,14 +63,12 @@ public class CreateQuestionRootPage extends MifosPage {
         List<Choice> choices = createQuestionParameters.getChoices();
         for (int i = 0, choicesSize = choices.size(); i < choicesSize; i++) {
             Choice choice = choices.get(i);
-            selenium.type("currentQuestion.currentSmartChoice", choice.getChoiceText());
-            selenium.keyUp("id=currentQuestion.currentSmartChoice", " ");
+            typeAndFireEvents("currentQuestion.currentSmartChoice", choice.getChoiceText());
             selenium.click("_eventId_addSmartChoice");
             waitForPageToLoad();
             for (String tag : choice.getTags()) {
                 String tagId = "currentQuestion.currentSmartChoiceTags[" + i + "]";
-                selenium.type(tagId, tag);
-                selenium.keyUp("id=" + tagId, " ");
+                typeAndFireEvents(tagId, tag);
                 selenium.click("addSmartChoiceTag_" + i);
                 waitForPageToLoad();
             }
@@ -79,8 +77,7 @@ public class CreateQuestionRootPage extends MifosPage {
 
     private void setAnswerChoices(CreateQuestionParameters createQuestionParameters) {
         for (String choice : createQuestionParameters.getChoicesAsStrings()) {
-            selenium.type("currentQuestion.currentChoice", choice);
-            selenium.keyUp("id=currentQuestion.currentChoice"," ");
+            typeAndFireEvents("currentQuestion.currentChoice", choice);
             selenium.click("_eventId_addChoice");
             waitForPageToLoad();
         }

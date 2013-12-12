@@ -383,7 +383,9 @@
                         </goals>
                         <configuration>
                             <groups>${test.group.no_db_unit}</groups>
-                            <excludedGroups>workInProgress</excludedGroups>
+                            <!-- excluding holiday tests b/c those aren't cleaning up after themselves
+                                 and causing other tests to fail -->
+                            <excludedGroups>workInProgress,holiday</excludedGroups>
                             <skip>${maven.test.skip}</skip>
                             <failIfNoTests>false</failIfNoTests>
                             <reportsDirectory>${project.build.directory}/surefire-reports/integration/no_db_unit</reportsDirectory>
