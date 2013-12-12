@@ -41,6 +41,7 @@ import org.mifos.test.acceptance.framework.loanproduct.LoanProductDetailsPage;
 import org.mifos.test.acceptance.framework.testhelpers.FormParametersHelper;
 import org.mifos.test.acceptance.framework.testhelpers.LoanTestHelper;
 import org.mifos.test.acceptance.framework.testhelpers.NavigationHelper;
+import org.mifos.test.acceptance.framework.testhelpers.QuestionGroupTestHelper;
 import org.mifos.test.acceptance.loan.QuestionGroupHelper;
 import org.mifos.test.acceptance.remote.DateTimeUpdaterRemoteTestingService;
 import org.springframework.test.context.ContextConfiguration;
@@ -56,6 +57,7 @@ public class DefineNewLoanProductTest extends UiTestCaseBase {
 
     private Random random;
     private QuestionGroupHelper questionGroupHelper;
+    private QuestionGroupTestHelper questionGroupTestHelper;
 
     @SuppressWarnings("PMD.SignatureDeclareThrowsException")    // one of the dependent methods throws Exception
     @BeforeMethod
@@ -63,6 +65,7 @@ public class DefineNewLoanProductTest extends UiTestCaseBase {
     public void setUp() throws Exception {
         super.setUp();
         questionGroupHelper = new QuestionGroupHelper(new NavigationHelper(selenium));
+        questionGroupTestHelper = new QuestionGroupTestHelper(selenium);
         random = new Random();
     }
 
@@ -96,6 +99,7 @@ public class DefineNewLoanProductTest extends UiTestCaseBase {
         new NavigationHelper(selenium).navigateToAdminPage().
                 verifyPage().defineLoanProduct(formParameters);
 
+        questionGroupTestHelper.markQuestionGroupAsInactive(questionGroupTitle);
     }
 
     @SuppressWarnings("PMD.SignatureDeclareThrowsException")    // one of the dependent methods throws Exception

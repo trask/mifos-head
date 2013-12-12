@@ -76,9 +76,8 @@ public class QuestionResponsePage extends MifosPage {
 
     public void populateSmartSelect(String smartSelectId, Map<String, String> tags) {
         for (String tag : tags.keySet()) {
-            selenium.type(smartSelectId, tag);
-            selenium.keyUp(smartSelectId, " ");
-            selenium.check(String.format("css=input[value=%s:%s]", tags.get(tag), tag));
+            typeAndFireEvents(smartSelectId, tag);
+            selenium.check(String.format("css=input[value=\"%s:%s\"]", tags.get(tag), tag));
         }
     }
 

@@ -22,6 +22,7 @@ package org.mifos.test.acceptance.center;
 
 import static java.util.Arrays.asList;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -53,6 +54,7 @@ import org.mifos.test.acceptance.framework.testhelpers.ClientTestHelper;
 import org.mifos.test.acceptance.framework.testhelpers.GroupTestHelper;
 import org.mifos.test.acceptance.framework.testhelpers.NavigationHelper;
 import org.mifos.test.acceptance.framework.testhelpers.QuestionGroupTestHelper;
+import org.mifos.test.acceptance.remote.DateTimeUpdaterRemoteTestingService;
 import org.mifos.test.acceptance.remote.InitializeApplicationRemoteTestingService;
 import org.mifos.test.acceptance.util.StringUtil;
 import org.springframework.test.context.ContextConfiguration;
@@ -200,7 +202,12 @@ public class CenterTest extends UiTestCaseBase {
     }
     
     @Test(enabled = true)
-    public void verifyApplyPaymentForCenterWithUnusualName() {
+    public void verifyApplyPaymentForCenterWithUnusualName() throws UnsupportedEncodingException {
+        // need to reset to current date/time in case other tests have changed it
+        DateTimeUpdaterRemoteTestingService dateTimeUpdaterRemoteTestingService =
+                new DateTimeUpdaterRemoteTestingService(selenium);
+        dateTimeUpdaterRemoteTestingService.setDateTime(new DateTime());
+
     	String centerName = "`~!@#$%^&*()_+-=[];',./{}|:<>? Center";
     	
     	CreateCenterEnterDataPage.SubmitFormParameters formParameters = new CreateCenterEnterDataPage.SubmitFormParameters();

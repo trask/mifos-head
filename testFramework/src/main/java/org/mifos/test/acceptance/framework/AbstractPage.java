@@ -110,12 +110,26 @@ public class AbstractPage {
 //        selenium.keyUp(locator, tabKey);
         selenium.keyPressNative("9");
     }
+    
+    public void typeAndFireEvents(String locator, String value) {
+    	selenium.type(locator, value);
+    	selenium.typeKeys(locator, value);
+    	selenium.fireEvent(locator, "change");
+    	selenium.fireEvent(locator, "blur");
+    }
+    
+    public void select(String locator, String value) {
+    	selenium.select(locator, value);
+    	selenium.fireEvent(locator, "change");
+    }
+    
     public void waitForElementToPresent(String locator){
         selenium.waitForCondition("selenium.isElementPresent(\"" + locator + "\")",MAX_WAIT_FOR_PAGE_TO_LOAD_IN_MILLISECONDS);
     }
 
     public void navigateBack(){
         selenium.goBack();
+        waitForPageToLoad();
     }
 
 }

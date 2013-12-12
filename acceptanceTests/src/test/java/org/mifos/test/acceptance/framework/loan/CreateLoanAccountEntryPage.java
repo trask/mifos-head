@@ -539,9 +539,6 @@ public class CreateLoanAccountEntryPage extends MifosPage {
         }
 
     public void setInputFilterChoices(String key){
-        selenium.focus("//*[contains(.,'DT_6245')]/following::input[1]");
-        selenium.mouseDown("//*[contains(.,'DT_6245')]/following::input[1]");
-        selenium.keyPress("//*[contains(.,'DT_6245')]/following::input[1]", key);
-        selenium.keyUp("//*[contains(.,'DT_6245')]/following::input[1]", key);
+        typeAndFireEvents("//*[contains(.,'DT_6245')]/following::input[1]", key);
     }
 }

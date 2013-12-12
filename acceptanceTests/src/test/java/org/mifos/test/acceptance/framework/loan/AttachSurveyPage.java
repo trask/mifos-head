@@ -33,7 +33,7 @@ public class AttachSurveyPage extends MifosPage {
     }
 
     public QuestionnairePage selectSurvey(String questionGroupTitle) {
-        selenium.select("id=questionGroupId", "label=" + questionGroupTitle);
+        select("id=questionGroupId", "label=" + questionGroupTitle);
         selenium.click("_eventId_selectQuestionnaire");
         waitForPageToLoad();
         return new QuestionnairePage(selenium);
