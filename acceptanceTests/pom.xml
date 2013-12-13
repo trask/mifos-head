@@ -19,7 +19,7 @@
         <selenium.background>true</selenium.background>
         <selenium.log.output>true</selenium.log.output>
         <SELENIUM_PORT>4445</SELENIUM_PORT>
-        <SERVLET_PORT>8083</SERVLET_PORT>
+        <SERVLET_PORT>8081</SERVLET_PORT>
         <stop.port>8005</stop.port>
         <jdk.version>1.6</jdk.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -316,7 +316,7 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>selenium-maven-plugin</artifactId>
                 <version>2.3</version>
-                <executions>
+                <!--executions>
                     <execution>
                         <id>start-selenium</id>
                         <phase>pre-integration-test</phase>
@@ -324,7 +324,7 @@
                             <goal>start-server</goal>
                         </goals>
                     </execution>
-                </executions>
+                </executions-->
                 <configuration>
                     <skip>${maven.test.skip}</skip>
                     <background>${selenium.background}</background>
@@ -389,12 +389,12 @@
                             <skip>${maven.test.skip}</skip>
                             <failIfNoTests>false</failIfNoTests>
                             <reportsDirectory>${project.build.directory}/surefire-reports/integration/no_db_unit</reportsDirectory>
-                            <properties>
+                            <!--properties>
                                 <property>
                                     <name>listener</name>
                                     <value>org.mifos.test.acceptance.framework.ScreenShotListener</value>
                                 </property>
-                            </properties>
+                            </properties-->
                         </configuration>
                     </execution>
                 </executions>

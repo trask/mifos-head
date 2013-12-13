@@ -20,7 +20,13 @@
 
 package org.mifos.test.acceptance.framework;
 
+import com.saucelabs.common.SauceOnDemandAuthentication;
+import com.saucelabs.common.SauceOnDemandSessionIdProvider;
+import com.saucelabs.testng.SauceOnDemandAuthenticationProvider;
+import com.saucelabs.testng.SauceOnDemandTestListener;
+import com.thoughtworks.selenium.DefaultSelenium;
 import com.thoughtworks.selenium.Selenium;
+
 import org.dbunit.DatabaseUnitException;
 import org.mifos.framework.util.DbUnitUtilities;
 import org.mifos.test.acceptance.remote.InitializeApplicationRemoteTestingService;
@@ -30,8 +36,9 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.Assert;
-import org.testng.annotations.AfterGroups;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
@@ -41,10 +48,10 @@ import java.sql.SQLException;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
+@Listeners({SauceOnDemandTestListener.class})
 @ContextConfiguration(locations = {"classpath:test-context.xml", "classpath:ui-test-context.xml"})
 @Test(singleThreaded = true)
-public class UiTestCaseBase extends AbstractTestNGSpringContextTests {
-    private static Boolean seleniumServerIsRunning = Boolean.FALSE;
+public class UiTestCaseBase extends AbstractTestNGSpringContextTests implements SauceOnDemandSessionIdProvider, SauceOnDemandAuthenticationProvider {
     private static final String ERROR_ELEMENT_ID = "*.errors";
 
     @Autowired
@@ -64,6 +71,18 @@ public class UiTestCaseBase extends AbstractTestNGSpringContextTests {
     public void baseSetUp(Method method) throws Exception {
         String testName = getClass().getName() + "." + method.getName();
         System.out.println("running test " + testName);
+        String sauceUsername = System.getenv("SAUCE_USERNAME");
+        String sauceAccessKey = System.getenv("SAUCE_ACCESS_KEY");
+        String browserStartCommand = "{\"username\": \"" + sauceUsername + "\","
+                + " \"access-key\": \"" + sauceAccessKey + "\","
+                + " \"os\": \"Windows 7\","
+                + " \"browser\": \"firefox\","
+                + " \"browser-version\": \"21\","
+                + " \"name\": \"" + testName + "\"}";
+        this.selenium = new DefaultSelenium("ondemand.saucelabs.com", 80, browserStartCommand, "http://localhost:8081/mifos/");
+        selenium.start();
+        selenium.windowFocus();
+        selenium.windowMaximize();
         if (!selenium.getLocation().matches("http://localhost:[0-9]+/mifos.*")) {
             // need to open mifos before setting cookie
             selenium.open("login.ftl");
@@ -86,26 +105,27 @@ public class UiTestCaseBase extends AbstractTestNGSpringContextTests {
         }
     }
 
-    @Autowired
-    @Test(enabled = false)
-    public void setSelenium(Selenium selenium) {
-        this.selenium = selenium;
-        synchronized (UiTestCaseBase.class) {
-            if (!seleniumServerIsRunning.booleanValue()) {
-                selenium.start();
-                selenium.windowFocus();
-                selenium.windowMaximize();
-                seleniumServerIsRunning = Boolean.TRUE;
-            }
-        }
-    }
-
     @Test(enabled = false)
     public Selenium getSelenium() {
         synchronized (UiTestCaseBase.class) {
             return selenium;
         }
     }
+    
+    @AfterMethod(alwaysRun = true)
+    public void baseTearDown() throws Exception {
+        selenium.stop();
+    }
+
+	@Override
+	public String getSessionId() {
+		return selenium.getEval("selenium.sessionId");
+	}
+
+	@Override
+	public SauceOnDemandAuthentication getAuthentication() {
+		return new SauceOnDemandAuthentication("traskmifos", "bc2e3c15-7643-4194-bcc2-dc8452a22116");
+	}
 
     protected void assertTextFoundOnPage(String text, String message) {
         assertTrue(selenium.isTextPresent(text), message);
@@ -158,4 +178,3 @@ public class UiTestCaseBase extends AbstractTestNGSpringContextTests {
         assertEquals(selenium.getAttribute("page.id@title"), pageName);
     }
 }
-
