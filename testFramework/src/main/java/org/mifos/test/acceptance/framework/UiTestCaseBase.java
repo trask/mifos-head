@@ -35,6 +35,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.sql.SQLException;
 
 import static org.testng.Assert.assertEquals;
@@ -63,6 +64,11 @@ public class UiTestCaseBase extends AbstractTestNGSpringContextTests {
     public void baseSetUp(Method method) throws Exception {
         String testName = getClass().getName() + "." + method.getName();
         System.out.println("running test " + testName);
+        if (!selenium.getLocation().matches("http://localhost:[0-9]+/mifos.*")) {
+            // need to open mifos before setting cookie
+            selenium.open("login.ftl");
+        }
+        selenium.createCookie("test=" + testName, "");
     }
 
     @SuppressWarnings("PMD.SignatureDeclareThrowsException") // allow for overriding methods to throw Exception
