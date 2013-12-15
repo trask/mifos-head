@@ -59,6 +59,12 @@ public class UiTestCaseBase extends AbstractTestNGSpringContextTests {
 
     protected static Selenium selenium;
 
+    @BeforeMethod(alwaysRun = true)
+    public void baseSetUp(Method method) throws Exception {
+        String testName = getClass().getName() + "." + method.getName();
+        System.out.println("running test " + testName);
+    }
+
     @SuppressWarnings("PMD.SignatureDeclareThrowsException") // allow for overriding methods to throw Exception
     @BeforeMethod
     public void setUp() throws Exception {
