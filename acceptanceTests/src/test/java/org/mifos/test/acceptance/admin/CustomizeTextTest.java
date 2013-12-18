@@ -299,7 +299,9 @@ public class CustomizeTextTest  extends UiTestCaseBase {
             adminTestHelper.addCustomizedText(originalTextVector.get(i), customTextVector.get(i));
         }
         
-        LoanAccountPage loanAccountPage = navigationHelper.navigateToLoanAccountPage("000100000000050");
+        // account 000100000000020 is used by two other tests, but this sharing doesn't seem to cause failures
+        // since they all just use the account to verify pages and do not seem to modify it
+        LoanAccountPage loanAccountPage = navigationHelper.navigateToLoanAccountPage("000100000000020");
         AccountChangeStatusPage accountChangeStatusPage = loanAccountPage.navigateToEditAccountStatus();
         
         for(int i=0;i<customTextVector.size()-2;i++) {
@@ -316,7 +318,7 @@ public class CustomizeTextTest  extends UiTestCaseBase {
             adminTestHelper.removeCustomizedText(originalTextVector.get(i));
         }
         
-        loanAccountPage = navigationHelper.navigateToLoanAccountPage("000100000000050");
+        loanAccountPage = navigationHelper.navigateToLoanAccountPage("000100000000020");
         accountChangeStatusPage = loanAccountPage.navigateToEditAccountStatus();
         
         for(int i=0;i<3;i++) {
