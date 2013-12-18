@@ -1072,7 +1072,11 @@ public class ClientTest extends UiTestCaseBase {
 
     @SuppressWarnings("PMD.SignatureDeclareThrowsException")
     // http://mifosforge.jira.com/browse/MIFOSTEST-50
-    @Test(enabled=true)
+    // disabled for now because this test conflicts with some others that try to use "client1 lastname", see
+    // * CreateClientLoanAccountTest.newWeeklyClientLoanAccountWithQuestionGroups()
+    // * CreateClientLoanAccountTest.newWeeklyClientLoanAccountWithModifyErrors()
+    // * CreateClientLoanAccountTest.newWeeklyClientLoanAccountWithDateTypeCustomField()
+    @Test(enabled=false)
     public void tryRemoveClientWithLoanFromGroupWithLoan() throws Exception {
         String clientName = "client1 lastname";
 

@@ -87,6 +87,10 @@ public class CreateGroupLoanAccountTest extends UiTestCaseBase {
 
     //http://mifosforge.jira.com/browse/MIFOSTEST-303
     @SuppressWarnings("PMD.SignatureDeclareThrowsException")
+    // disabled for now because this test conflicts with others that try to use "groupWithoutLoan", see
+    // * ClientTest.removeClientWithLoanFromGroup()
+    // * ClientTest.removeClientWithSavingsFromGroupWithSavingsCheckGroupCalculation()
+    @Test(enabled = false)
     public void newWeeklyGroupLoanAccount() throws Exception {
         //Given
         DateTimeUpdaterRemoteTestingService dateTimeUpdaterRemoteTestingService = new DateTimeUpdaterRemoteTestingService(selenium);
