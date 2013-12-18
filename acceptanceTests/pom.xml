@@ -355,7 +355,7 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
                     <redirectTestOutputToFile>false</redirectTestOutputToFile>
-                    <runOrder>reversealphabetical</runOrder>
+                    <runOrder>alphabetical</runOrder>
                     <testFailureIgnore>true</testFailureIgnore>
                     <threadCount>1</threadCount>
                     <skip>true</skip>
