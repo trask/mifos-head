@@ -1209,9 +1209,18 @@ public class CustomerServiceImpl implements CustomerService {
 
             if (glimEnabled) {
                 if (customerIsMemberOfAnyExistingGlimLoanAccount(client, client.getParentCustomer())) {
+                    System.out.println("WE HAVE A GLIM PROBLEM !!!!!");
                     throw new BusinessRuleException(CustomerConstants.GROUP_HAS_ACTIVE_ACCOUNTS_EXCEPTION);
                 }
             } else if (client.getParentCustomer().hasActiveLoanAccounts()) {
+                System.out.println("WE HAVE A NON-GLIM PROBLEM !!!!!");
+                System.out.println("CUSTOMER: " + client.getParentCustomer());
+                for (AccountBO account : client.getParentCustomer().getAccounts()) {
+                    if (account.isActiveLoanAccount()) {
+                        System.out.println("FOUND AN ACTIVE LOAN: " + account);
+                    }
+                }
+                System.out.println("now throwing exception");
                 // not glim - then disallow removing client from group with active account
                 throw new BusinessRuleException(CustomerConstants.GROUP_HAS_ACTIVE_ACCOUNTS_EXCEPTION);
             }
