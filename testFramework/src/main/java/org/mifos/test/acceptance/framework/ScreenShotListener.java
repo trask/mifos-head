@@ -35,7 +35,9 @@ public class ScreenShotListener extends TestListenerAdapter {
         super.onTestFailure(testResult);
         if (!testResult.isSuccess()) {
             File file = new File(System.getProperty("java.io.tmpdir"));
-            String fileNameBase = file.getAbsolutePath() + System.getProperty("file.separator") + testResult.getName() + System.currentTimeMillis();
+            String fileNameBase = file.getAbsolutePath() + System.getProperty("file.separator")
+                    + testResult.getInstance().getClass().getName() + "." + testResult.getName()
+                    + "-" + System.currentTimeMillis();
             String screenShotFileName = fileNameBase + ".png";
             Reporter.log("Screen shot saved at " + screenShotFileName, 0, true);
             UiTestCaseBase.selenium.
