@@ -25,6 +25,7 @@ import org.testng.TestListenerAdapter;
 
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
+import com.thoughtworks.selenium.SeleniumException;
 
 import java.io.File;
 import java.io.IOException;
@@ -39,14 +40,24 @@ public class ScreenShotListener extends TestListenerAdapter {
                     + testResult.getInstance().getClass().getName() + "." + testResult.getName()
                     + "-" + System.currentTimeMillis();
             String screenShotFileName = fileNameBase + ".png";
-            Reporter.log("Screen shot saved at " + screenShotFileName, 0, true);
-            UiTestCaseBase.selenium.
-                    captureEntirePageScreenshot(screenShotFileName, "background=#CCFFDD");
+            try {
+                UiTestCaseBase.selenium.
+                        captureEntirePageScreenshot(screenShotFileName, "background=#CCFFDD");
+                Reporter.log("Screen shot saved at " + screenShotFileName, 0, true);
+            } catch (SeleniumException e) {
+                Reporter.log("Error capturing screen shot");
+                e.printStackTrace();
+                return;
+            }
             String htmlSourceFileName = fileNameBase + ".html";
             try {
                 Files.write(UiTestCaseBase.selenium.getHtmlSource(), new File(htmlSourceFileName), Charsets.UTF_8);
                 Reporter.log("Html source saved at " + htmlSourceFileName, 0, true);
+            } catch (SeleniumException e) {
+                Reporter.log("Error capturing html source");
+                e.printStackTrace();
             } catch (IOException e) {
+                Reporter.log("Error saving html source");
                 e.printStackTrace();
             } 
         }
