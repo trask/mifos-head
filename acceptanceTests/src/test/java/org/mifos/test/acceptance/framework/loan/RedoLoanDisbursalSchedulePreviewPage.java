@@ -231,7 +231,7 @@ public class RedoLoanDisbursalSchedulePreviewPage extends MifosPage {
 
     private void clickPreviewButtonAndWaitForPageToLoad() {
         selenium.click(previewButton);
-        selenium.waitForPageToLoad("3000");
+        selenium.waitForPageToLoad("30000");
     }
 
     public RedoLoanDisbursalSchedulePreviewPage verifyInstallmentTotalValidations(int noOfInstallments, String minInstalmentAmount, DateTime disbursalDate, String gap) {
@@ -325,7 +325,7 @@ public class RedoLoanDisbursalSchedulePreviewPage extends MifosPage {
 
     public RedoLoanAccountPreviewPage clickPreviewAndGoToReviewLoanAccountPage() {
         selenium.click("schedulePreview.button.preview");
-        selenium.waitForPageToLoad("3000");
+        selenium.waitForPageToLoad("30000");
         return new RedoLoanAccountPreviewPage(selenium);
     }
 

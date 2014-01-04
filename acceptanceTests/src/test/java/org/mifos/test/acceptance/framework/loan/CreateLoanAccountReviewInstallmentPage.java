@@ -68,14 +68,14 @@ public class CreateLoanAccountReviewInstallmentPage extends AbstractPage {
     }
     public CreateLoanAccountReviewInstallmentPage submitWithErrors(String error) {
         selenium.click(previewButton);
-        selenium.waitForPageToLoad("3000");
+        selenium.waitForPageToLoad("30000");
         selenium.isTextPresent(error);
         return this;
     }
 
     public CreateLoanAccountReviewInstallmentPage validate(){
     	selenium.click("schedulePreview.button.validate");
-    	selenium.waitForPageToLoad("3000");
+    	selenium.waitForPageToLoad("30000");
     	return this;
     }
 
@@ -252,7 +252,7 @@ public class CreateLoanAccountReviewInstallmentPage extends AbstractPage {
 
     private void clickValidateAndWaitForPageToLoad() {
         selenium.click(validateButton);
-        selenium.waitForPageToLoad("3000");
+        selenium.waitForPageToLoad("30000");
     }
 
     public CreateLoanAccountReviewInstallmentPage verifyInstallmentTotalValidations(int noOfInstallments, int minInstalmentAmount, DateTime disbursalDate, int gap) {
@@ -389,7 +389,7 @@ public class CreateLoanAccountReviewInstallmentPage extends AbstractPage {
         setInstallmentDate("2", "02-Nov-2010");
         setFirstAndSecondInstallmentTotal("1");
         selenium.click(button);
-        selenium.waitForPageToLoad("3000");
+        selenium.waitForPageToLoad("30000");
         verifyCellValueOfCashFlow(3,2,"0");
         verifyCellValueOfCashFlow(3,3,"1");
         verifyCellValueOfCashFlow(4,2,"100");
@@ -402,7 +402,7 @@ public class CreateLoanAccountReviewInstallmentPage extends AbstractPage {
         setInstallmentDate("2", "02-Nov-2010");
         setFirstAndSecondInstallmentTotal("1");
         selenium.click(button);
-        selenium.waitForPageToLoad("3000");
+        selenium.waitForPageToLoad("30000");
         verifyCellValueOfCashFlow(3,2,"-1");
         verifyCellValueOfCashFlow(3,3,"2");
         verifyCellValueOfCashFlow(4,2,"200");
@@ -424,7 +424,7 @@ public class CreateLoanAccountReviewInstallmentPage extends AbstractPage {
         setInstallmentDate("2","02-Nov-2010");
         setFirstAndSecondInstallmentTotal("336.0");
         selenium.click(button);
-        selenium.waitForPageToLoad("3000");
+        selenium.waitForPageToLoad("30000");
 //        Assert.Assert.assertTrue(selenium.isTextPresent("Installment amount for September 2010 as % of warning threshold exceeds the allowed warning threshold of " + warningThreshold+ "%"));
         isTextPresentInPage("Installment amount for October 2010 as % of warning threshold exceeds the allowed warning threshold of " + warningThreshold+ "%");
         isTextPresentInPage("Installment amount for November 2010 as % of warning threshold exceeds the allowed warning threshold of " + warningThreshold+ "%");
@@ -436,7 +436,7 @@ public class CreateLoanAccountReviewInstallmentPage extends AbstractPage {
         setInstallmentDate("2","02-Jan-2011");
         setFirstAndSecondInstallmentTotal("336.0");
         selenium.click(button);
-        selenium.waitForPageToLoad("3000");
+        selenium.waitForPageToLoad("30000");
         isTextPresentInPage("Cash flow is not available for August 2010. Due date should be entered for a month for which cash flow is available");
         isTextPresentInPage("Cash flow is not available for January 2011. Due date should be entered for a month for which cash flow is available");
     }
@@ -486,7 +486,7 @@ public class CreateLoanAccountReviewInstallmentPage extends AbstractPage {
 
     public CreateLoanAccountPreviewPage clickPreviewAndGoToReviewLoanAccountPage() {
         selenium.click(previewButton);
-        selenium.waitForPageToLoad("3000");
+        selenium.waitForPageToLoad("30000");
         return new CreateLoanAccountPreviewPage(selenium);
     }
 

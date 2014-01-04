@@ -387,7 +387,7 @@ public class CreateLoanAccountEntryPage extends MifosPage {
     
     public CreateLoanAccountCashFlowPage clickContinueToNavigateToCashFlowPage() {
         selenium.click(continueButton);
-        selenium.waitForPageToLoad("3000");
+        selenium.waitForPageToLoad("30000");
         return new CreateLoanAccountCashFlowPage(selenium);
     }
     
