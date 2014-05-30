@@ -21,6 +21,7 @@
 package org.mifos.test.acceptance.framework;
 
 import com.thoughtworks.selenium.Selenium;
+
 import org.dbunit.DatabaseUnitException;
 import org.mifos.framework.util.DbUnitUtilities;
 import org.mifos.test.acceptance.remote.InitializeApplicationRemoteTestingService;
@@ -30,7 +31,9 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterGroups;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -44,7 +47,6 @@ import static org.testng.Assert.assertTrue;
 @ContextConfiguration(locations = {"classpath:test-context.xml", "classpath:ui-test-context.xml"})
 @Test(singleThreaded = true)
 public class UiTestCaseBase extends AbstractTestNGSpringContextTests {
-    private static Boolean seleniumServerIsRunning = Boolean.FALSE;
     private static final String ERROR_ELEMENT_ID = "*.errors";
 
     @Autowired
@@ -77,34 +79,27 @@ public class UiTestCaseBase extends AbstractTestNGSpringContextTests {
         // do nothing
     }
 
-    @AfterGroups(groups = {"ui"})
+    @BeforeClass(alwaysRun = true)
+    public void startSelenium() {
+        selenium.start();
+        selenium.windowFocus();
+        selenium.windowMaximize();
+    }
+    
+    @AfterClass(alwaysRun = true)
     public void stopSelenium() {
-        synchronized (UiTestCaseBase.class) {
-            if (seleniumServerIsRunning.booleanValue() && this.selenium != null) {
-                this.selenium.stop();
-            }
-        }
+        selenium.stop();
     }
 
     @Autowired
     @Test(enabled = false)
     public void setSelenium(Selenium selenium) {
-        this.selenium = selenium;
-        synchronized (UiTestCaseBase.class) {
-            if (!seleniumServerIsRunning.booleanValue()) {
-                selenium.start();
-                selenium.windowFocus();
-                selenium.windowMaximize();
-                seleniumServerIsRunning = Boolean.TRUE;
-            }
-        }
+    	UiTestCaseBase.selenium = selenium;
     }
-
+    
     @Test(enabled = false)
     public Selenium getSelenium() {
-        synchronized (UiTestCaseBase.class) {
-            return selenium;
-        }
+        return selenium;
     }
 
     protected void assertTextFoundOnPage(String text, String message) {
