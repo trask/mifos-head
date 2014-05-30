@@ -651,7 +651,7 @@
                 <!-- this goes away once we're completely off Struts -->
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>native2ascii-maven-plugin</artifactId>
-                <version>1.0-alpha-1</version>
+                <version>1.0-beta-1</version>
                 <executions>
                     <execution>
                         <id>native2ascii</id>
@@ -663,7 +663,9 @@
                             <encoding>UTF8</encoding>
                             <src>src/main/resources/org/mifos/config/localizedResources</src>
                             <dest>target/classes/org/mifos/config/localizedResources</dest>
-                            <includes>*.properties</includes>
+                            <includes>
+                                <include>*.properties</include>
+                            </includes>
                         </configuration>
                     </execution>
                 </executions>
